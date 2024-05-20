@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="card.css">
+</head>
+
+<body>
+    <form action="https://script.google.com/macros/s/AKfycbyInHDnjgHaXqZAOiDi_VK5oUy1Fg69h_IAqAYZLYxeP2V3HqQ1Sr2QiMtvFHh4-NKu/exec" method="post">
+    <div class="container">
+        <div class="preview-container">
+            <div class="preview-card" id="front">
+                <i class="material-icons">nfc</i>
+                <div class="image-container" id="displayLogoContainer" style="display: none;">
+                    <img id="displayLogo" src="" alt="Company Logo">
+                </div>
+            </div>
+            <div class="preview-card" id="back">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://example.com&amp;size=100x100"
+                        alt="QR Code">
+                </div>
+                <div class="divider"></div>
+                <div class="text-overlay">
+                    <h2 id="displayNameBack">Your Name</h2>
+                    <p id="displayCompanyNameBack">Company Name</p>
+                    <p id="displayWebsiteBack">Company Website</p>
+                    <p id="displayPhoneBack">Phone Number</p>
+                    <p id="displayEmailBack">Company Email</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-container">
+            <form method="post" action="https://script.google.com/macros/s/AKfycbwlldLDxD7M9VNL9BzRZyblvfRweOaLijizFEwunAFXS3D9UZDfa8iyQ4LWFgQyT4uM/exec" id="cardForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Your Name" oninput="updateCard()">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" placeholder="Company Name" oninput="updateCard()">
+                <label for="website">Company Website:</label>
+                <input type="url" id="website" placeholder="Company Website" oninput="updateCard()">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" placeholder="Phone Number" oninput="updateCard()">
+                <label for="email">Company Email:</label>
+                <input type="email" id="email" placeholder="Company Email" oninput="updateCard()">
+                <label for="logo">Company Logo:</label>
+                <input type="file" id="logo" accept="image/*" onchange="updateCard()">
+                <div class="color-option-container">
+                    <label for="colorOptionSolid">
+                        <input type="radio" id="colorOptionSolid" name="colorOption" value="solid" checked
+                            onclick="updateColorOptions()"> Solid Color
+                    </label>
+                    <label for="colorOptionGradient">
+                        <input type="radio" id="colorOptionGradient" name="colorOption" value="gradient"
+                            onclick="updateColorOptions()"> Gradient Color
+                    </label>
+                </div>
+                <div id="solidColorInput" class="color-input-container">
+                    <label for="bgColor">Select Background Color:</label>
+                    <input type="color" id="bgColor" onchange="updateCard()" title="Background Color">
+                </div>
+                <div id="gradientColorInput" class="color-input-container" style="display: none;">
+                    <label for="bgGradientStart">Select Background Gradient Start Color:</label>
+                    <input type="color" id="bgGradientStart" onchange="updateCard()" title="Gradient Start Color">
+                    <label for="bgGradientEnd">Select Background Gradient End Color:</label>
+                    <input type="color" id="bgGradientEnd" onchange="updateCard()" title="Gradient End Color">
+                </div>
+                <label for="textColor">Select Text Color:</label>
+                <input type="color" id="textColor" onchange="updateCard()" title="Text Color">
+                <input type="submit">
+                <button type="button" id="resetButton" onclick="resetPage()">Reset</button>
+            </form>
+        </div>
+    </div>
+    <script src="card.js">
+
+        const scriptURL = ''
+            const form = document.forms['formName']
+
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                    .then(response => alert("Thank you! your form is submitted successfully."))
+                    .then(() => { window.location.reload(); })
+                    .catch(error => console.error('Error!', error.message))
+            })
+
+    </script>
+    
+    </form>
+    
+<div id="response"></div>
+<script>
+    document.getElementById('sheet-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var form = e.target;
+        var formData = new FormData(form);
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('response').innerText = data;
+                form.reset();
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = 'Error: ' + error;
+            });
+    });
+</script>
+
+</body>
+
+</html>
